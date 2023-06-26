@@ -3,13 +3,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useReducer } from "react";
 import { AiOutlineColumnWidth } from "react-icons/ai";
-
-const meterToYard = (meter: number) => meter * 1.0936;
-const meterToInch = (meter: number) => meter * 39.37;
-const meterToFoot = (meter: number) => meter * 3.2808;
-const yardToMeter = (yard: number) => yard / 1.0936;
-const inchToMeter = (inch: number) => inch / 39.37;
-const footToMeter = (foot: number) => foot / 3.2808;
+import {
+  meterToYard,
+  meterToInch,
+  meterToFoot,
+  yardToMeter,
+  inchToMeter,
+  footToMeter,
+} from "./meterToYard";
+import { InputField } from "./InputField";
 
 const reducer = (
   state: typeof iniState,
@@ -54,53 +56,49 @@ const iniState = {
 export const LengthTab = () => {
   const [state, dispatch] = useReducer(reducer, iniState);
   return (
-    <div className="[&_input]:text-stone-800">
+    <div className="page-length ">
       <h3 className="flex items-center">
         <AiOutlineColumnWidth />
         <div className="ml-2">Length</div>
       </h3>
       <div className="mt-4"></div>
       <div>
-        <Label>meter, m</Label>
-        <Input
+        <InputField
+          label="meter, m"
           value={state.meter.toFixed(2)}
           onChange={(e) => {
             dispatch({ type: "meter", payload: +e.target.value });
           }}
-          type="text"
           placeholder="123.0"
         />
       </div>
       <div className="mt-4">
-        <Label>yard, yd</Label>
-        <Input
+        <InputField
+          label="yard, yd"
+          value={state.yard.toFixed(2)}
           onChange={(e) => {
             dispatch({ type: "yard", payload: +e.target.value });
           }}
-          value={state.yard.toFixed(2)}
-          type="number"
           placeholder="123.0"
         />
       </div>
       <div className="mt-4">
-        <Label>inch, in</Label>
-        <Input
+        <InputField
+          label="inch, in"
           value={state.inch.toFixed(2)}
           onChange={(e) => {
             dispatch({ type: "inch", payload: +e.target.value });
           }}
-          type="number"
           placeholder="123.0"
         />
       </div>
       <div className="mt-4">
-        <Label>foot, ft,</Label>
-        <Input
+        <InputField
+          label="foot, ft"
           value={state.foot.toFixed(2)}
           onChange={(e) => {
             dispatch({ type: "foot", payload: +e.target.value });
           }}
-          type="number"
           placeholder="123.0"
         />
       </div>
