@@ -1,6 +1,5 @@
 "use client";
 import { useReducer } from "react";
-import { AiOutlineColumnWidth } from "react-icons/ai";
 import { InputField } from "./InputField";
 import {
   footToMeter,
@@ -10,6 +9,7 @@ import {
   meterToYard,
   yardToMeter,
 } from "./meterToYard";
+import { BiArea } from "react-icons/bi";
 
 const meterSqToYardSq = (meterSq: number) => Math.pow(meterToYard(meterSq), 2);
 const meterSqToInchSq = (meterSq: number) => Math.pow(meterToInch(meterSq), 2);
@@ -17,31 +17,35 @@ const meterSqToFootSq = (meterSq: number) => Math.pow(meterToFoot(meterSq), 2);
 
 const reducer = (
   state: typeof iniState,
-  action: { type: string; payload: number }
+  action: { type: string; payload: string }
 ) => {
   let meterSq, yardSq, inchSq, footSq;
   switch (action.type) {
     case "meterSq":
       meterSq = action.payload;
-      yardSq = meterSqToYardSq(meterSq);
-      inchSq = meterSqToInchSq(meterSq);
-      footSq = meterSqToFootSq(meterSq);
+      let _meterSq = parseFloat(meterSq) || 0;
+      yardSq = meterSqToYardSq(_meterSq);
+      inchSq = meterSqToInchSq(_meterSq);
+      footSq = meterSqToFootSq(_meterSq);
       return { ...state, meterSq, yardSq, inchSq, footSq };
     case "yardSq":
       yardSq = action.payload;
-      meterSq = yardToMeter(Math.sqrt(yardSq));
+      let _yardSq = parseFloat(yardSq) || 0;
+      meterSq = yardToMeter(Math.sqrt(_yardSq));
       inchSq = meterSqToInchSq(meterSq);
       footSq = meterSqToFootSq(meterSq);
       return { ...state, meterSq, yardSq, inchSq, footSq };
     case "inchSq":
       inchSq = action.payload;
-      meterSq = inchToMeter(Math.sqrt(inchSq));
+      let _inchSq = parseFloat(inchSq) || 0;
+      meterSq = inchToMeter(Math.sqrt(_inchSq));
       yardSq = meterSqToYardSq(meterSq);
       footSq = meterSqToFootSq(meterSq);
       return { ...state, meterSq, yardSq, inchSq, footSq };
     case "footSq":
       footSq = action.payload;
-      meterSq = footToMeter(Math.sqrt(footSq));
+      let _footSq = parseFloat(footSq) || 0;
+      meterSq = footToMeter(Math.sqrt(_footSq));
       yardSq = meterSqToYardSq(meterSq);
       inchSq = meterSqToInchSq(meterSq);
       return { ...state, meterSq, yardSq, inchSq, footSq };
@@ -49,11 +53,16 @@ const reducer = (
       return state;
   }
 };
-const iniState = {
-  meterSq: 0,
-  yardSq: 0,
-  inchSq: 0,
-  footSq: 0,
+const iniState: {
+  meterSq: string | number;
+  yardSq: string | number;
+  inchSq: string | number;
+  footSq: string | number;
+} = {
+  meterSq: "",
+  yardSq: "",
+  inchSq: "",
+  footSq: "",
 };
 
 export const AreaTab = () => {
@@ -62,23 +71,23 @@ export const AreaTab = () => {
   return (
     <div className="page-area">
       <h3 className="flex items-center">
-        <AiOutlineColumnWidth />
+        <BiArea />
         <div className="ml-2">Area</div>
       </h3>
       <div className="mt-4"></div>
       <InputField
         label="square meter, m²"
-        value={state.meterSq.toFixed(2)}
-        onChange={(e) =>
-          dispatch({ type: "meterSq", payload: Number(e.target.value) })
-        }
+        value={state.meterSq}
+        onChange={(e) => {
+          dispatch({ type: "meterSq", payload: e.target.value });
+        }}
       />
       <div className="mt-4">
         <InputField
           label="square yard, yd²"
-          value={state.yardSq.toFixed(2)}
+          value={state.yardSq}
           onChange={(e) =>
-            dispatch({ type: "yardSq", payload: Number(e.target.value) })
+            dispatch({ type: "yardSq", payload: e.target.value })
           }
         />
       </div>
@@ -89,9 +98,9 @@ export const AreaTab = () => {
               square inch, in<sup>2</sup>
             </>
           }
-          value={state.inchSq.toFixed(2)}
+          value={state.inchSq}
           onChange={(e) =>
-            dispatch({ type: "inchSq", payload: Number(e.target.value) })
+            dispatch({ type: "inchSq", payload: e.target.value })
           }
         />
       </div>
@@ -102,9 +111,9 @@ export const AreaTab = () => {
               square foot, ft<sup>2</sup>
             </>
           }
-          value={state.footSq.toFixed(2)}
+          value={state.footSq}
           onChange={(e) =>
-            dispatch({ type: "footSq", payload: Number(e.target.value) })
+            dispatch({ type: "footSq", payload: e.target.value })
           }
         />
       </div>

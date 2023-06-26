@@ -6,7 +6,7 @@ import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { useToast } from "@/components/ui/use-toast";
 
 export const InputField: React.FC<{
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label: React.ReactNode;
   placeholder?: string;
@@ -18,14 +18,16 @@ export const InputField: React.FC<{
       <Label>{label}</Label>
       <div className="flex justify-between">
         <Input
-          value={value}
+          value={value == 0 ? "" : value}
           onChange={onChange}
-          type="number"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]+[\.,]([0-9]{1,2})"
           placeholder={placeholder}
         />
         <button
           onClick={() => {
-            copy(value);
+            copy(value + "");
             toast({ title: "Copied", description: "Copied to clipboard" });
           }}
           className="ml-4"

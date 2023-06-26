@@ -15,31 +15,35 @@ import { InputField } from "./InputField";
 
 const reducer = (
   state: typeof iniState,
-  action: { type: string; payload: number }
+  action: { type: string; payload: string }
 ) => {
   let meter, yard, inch, foot;
   switch (action.type) {
     case "meter":
       meter = action.payload;
-      yard = meterToYard(meter);
-      inch = meterToInch(meter);
-      foot = meterToFoot(meter);
+      const _meter = parseFloat(meter) || 0;
+      yard = meterToYard(_meter);
+      inch = meterToInch(_meter);
+      foot = meterToFoot(_meter);
       return { ...state, meter, yard, inch, foot };
     case "yard":
       yard = action.payload;
-      meter = yardToMeter(yard);
+      const _yard = parseFloat(yard) || 0;
+      meter = yardToMeter(_yard);
       inch = meterToInch(meter);
       foot = meterToFoot(meter);
       return { ...state, meter, yard, inch, foot };
     case "inch":
       inch = action.payload;
-      meter = inchToMeter(inch);
+      const _inch = parseFloat(inch) || 0;
+      meter = inchToMeter(_inch);
       yard = meterToYard(meter);
       foot = meterToFoot(meter);
       return { ...state, meter, yard, inch, foot };
     case "foot":
       foot = action.payload;
-      meter = footToMeter(foot);
+      const _foot = parseFloat(foot) || 0;
+      meter = footToMeter(_foot);
       yard = meterToYard(meter);
       inch = meterToInch(meter);
       return { ...state, meter, yard, inch, foot };
@@ -47,11 +51,16 @@ const reducer = (
       return state;
   }
 };
-const iniState = {
-  meter: 0,
-  yard: 0,
-  inch: 0,
-  foot: 0,
+const iniState: {
+  meter: string | number;
+  yard: string | number;
+  inch: string | number;
+  foot: string | number;
+} = {
+  meter: "",
+  yard: "",
+  inch: "",
+  foot: "",
 };
 export const LengthTab = () => {
   const [state, dispatch] = useReducer(reducer, iniState);
@@ -65,9 +74,9 @@ export const LengthTab = () => {
       <div>
         <InputField
           label="meter, m"
-          value={state.meter.toFixed(2)}
+          value={state.meter}
           onChange={(e) => {
-            dispatch({ type: "meter", payload: +e.target.value });
+            dispatch({ type: "meter", payload: e.target.value });
           }}
           placeholder="123.0"
         />
@@ -75,9 +84,9 @@ export const LengthTab = () => {
       <div className="mt-4">
         <InputField
           label="yard, yd"
-          value={state.yard.toFixed(2)}
+          value={state.yard}
           onChange={(e) => {
-            dispatch({ type: "yard", payload: +e.target.value });
+            dispatch({ type: "yard", payload: e.target.value });
           }}
           placeholder="123.0"
         />
@@ -85,9 +94,9 @@ export const LengthTab = () => {
       <div className="mt-4">
         <InputField
           label="inch, in"
-          value={state.inch.toFixed(2)}
+          value={state.inch}
           onChange={(e) => {
-            dispatch({ type: "inch", payload: +e.target.value });
+            dispatch({ type: "inch", payload: e.target.value });
           }}
           placeholder="123.0"
         />
@@ -95,9 +104,9 @@ export const LengthTab = () => {
       <div className="mt-4">
         <InputField
           label="foot, ft"
-          value={state.foot.toFixed(2)}
+          value={state.foot}
           onChange={(e) => {
-            dispatch({ type: "foot", payload: +e.target.value });
+            dispatch({ type: "foot", payload: e.target.value });
           }}
           placeholder="123.0"
         />
