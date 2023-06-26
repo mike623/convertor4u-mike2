@@ -8,8 +8,8 @@ import { useState } from "react";
 
 export default function Home() {
   return (
-    <main className="p-8 bg-slate-500 text-white h-[100dvh]">
-      <Tabs defaultValue="length" className="w-[400px]">
+    <main className="flex justify-center items-center p-8 bg-slate-500 text-white h-[100dvh]">
+      <Tabs defaultValue="length" className="max-w-[400px] w-full">
         <TabsList >
           <TabsTrigger className='flex items-center' value="length">
             Length
