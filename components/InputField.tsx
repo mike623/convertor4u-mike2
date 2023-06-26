@@ -21,7 +21,7 @@ export const InputField: React.FC<{
           value={value == 0 ? "" : value}
           onChange={onChange}
           type="text"
-          inputMode="numeric"
+          inputMode="decimal"
           pattern="[0-9]+[\.,]([0-9]{1,2})"
           placeholder={placeholder}
         />
