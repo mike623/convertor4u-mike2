@@ -15,7 +15,7 @@ export default function Home() {
           </TabsTrigger>
           <TabsTrigger value="area">Area</TabsTrigger>
         </TabsList>
-        <div className="mt-8 [&_input]:text-stone-800">
+        <div className="mt-8 [&_input]:text-stone-800 [&_input]:text-base">
           <TabsContent value="length">
             <LengthTab />
           </TabsContent>
