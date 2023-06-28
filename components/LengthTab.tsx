@@ -1,6 +1,4 @@
 "use client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useReducer } from "react";
 import { AiOutlineColumnWidth } from "react-icons/ai";
 import {
@@ -12,6 +10,8 @@ import {
   footToMeter,
 } from "./meterToYard";
 import { InputField } from "./InputField";
+import { Button } from "./ui/button";
+import { AddDialog } from "./AddDialog";
 
 const reducer = (
   state: typeof iniState,
@@ -111,6 +111,9 @@ export const LengthTab = () => {
           placeholder="123.0"
         />
       </div>
+      {/* <div className="text-center mt-4">
+        <AddDialog state={state} trigger={<Button>Save</Button>} />
+      </div> */}
     </div>
   );
 };
