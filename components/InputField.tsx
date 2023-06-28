@@ -2,6 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BiCopy } from "react-icons/bi";
+import { FaTimes } from "react-icons/fa";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -14,7 +15,7 @@ export const InputField: React.FC<{
   const [, copy] = useCopyToClipboard();
   const { toast } = useToast();
   return (
-    <div>
+    <div className="relative">
       <Label>{label}</Label>
       <div className="flex justify-between">
         <Input
@@ -25,6 +26,17 @@ export const InputField: React.FC<{
           pattern="[0-9]+[\.,]([0-9]{1,2})"
           placeholder={placeholder}
         />
+        <div className="absolute right-10 top-[53%]">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              onChange({ target: { value: 0 } } as any);
+            }}
+            className="text-stone-500"
+          >
+            <FaTimes />
+          </button>
+        </div>
         <button
           onClick={() => {
             copy(value + "");
